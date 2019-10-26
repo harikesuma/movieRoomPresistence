@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Room_Presistance_CRUD</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_data">This database is empty, please add a movie to make a list</string>
+</resources>
