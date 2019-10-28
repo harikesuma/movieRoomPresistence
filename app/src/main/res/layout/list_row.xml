@@ -67,6 +67,16 @@
                 android:src="@drawable/icons8_trash"/>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/directorName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="Test"
+            android:layout_marginTop="60dp"
+            android:textSize="15dp"
+            android:gravity="bottom|right" />
+
     </RelativeLayout>
 
 

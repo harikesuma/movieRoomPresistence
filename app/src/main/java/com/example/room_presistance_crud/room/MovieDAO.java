@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -12,8 +13,12 @@ import java.util.List;
 
 @Dao
 public interface MovieDAO {
-    @Insert
-    void insert(Movie movie);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insert(Movie movie);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    void insert(Movie... movies);
 
     @Query("SELECT * FROM tb_movie")
     LiveData<List<Movie>> getAllMovies();
@@ -26,4 +31,6 @@ public interface MovieDAO {
 
     @Delete
     int delete(Movie movie);
+
+
 }

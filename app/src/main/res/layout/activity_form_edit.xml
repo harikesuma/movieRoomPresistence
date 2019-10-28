@@ -45,13 +45,23 @@
 
             </EditText>
 
+            <Spinner
+                android:id="@+id/spinnerName"
+                android:layout_margin="20dp"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/movieGenre">
+
+            </Spinner>
+
             <Button
                 android:id="@+id/btnUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Update"
                 android:textColor="#fff"
-                android:layout_below="@id/movieGenre"
+                android:layout_below="@id/spinnerName"
                 android:background="@color/colorPrimary"
                 android:layout_centerHorizontal="true">
 

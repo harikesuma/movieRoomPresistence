@@ -17,7 +17,7 @@ public class EditMovieViewModel extends AndroidViewModel {
     public EditMovieViewModel(@NonNull Application application) {
         super(application);
         Log.i(TAG, "Edit ViewModel");
-        movieRoomDatabase = MovieRoomDatabase.getDatabase(application);
+        movieRoomDatabase = MovieRoomDatabase.getInstance(application);
         movieDAO = movieRoomDatabase.movieDAO();
     }
 

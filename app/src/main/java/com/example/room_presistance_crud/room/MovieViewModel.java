@@ -20,7 +20,7 @@ public class MovieViewModel extends AndroidViewModel {
 
     public MovieViewModel(@NonNull Application application) {
         super(application);
-        movieRoomDatabase = MovieRoomDatabase.getDatabase(application);
+        movieRoomDatabase = MovieRoomDatabase.getInstance(application);
         movieDAO = movieRoomDatabase.movieDAO();
         movieList = movieDAO.getAllMovies();
     }
@@ -30,14 +30,19 @@ public class MovieViewModel extends AndroidViewModel {
     }
 
     public void update(Movie movie){
+
         new UpdateAsyncTask(movieDAO).execute(movie);
     }
 
-    public void delete(Movie movie){ new DeleteAsyncTask(movieDAO).execute(movie);}
+    public void delete(Movie movie){
+        new DeleteAsyncTask(movieDAO).execute(movie);}
 
     public LiveData<List<Movie>> getAllMovies(){
         return movieList;
     }
+
+
+
 
     @Override
     protected void onCleared() {
@@ -45,16 +50,18 @@ public class MovieViewModel extends AndroidViewModel {
         Log.i(TAG,"ViewModel Destroy");
     }
 
-    private class InsertAsyncTask extends AsyncTask<Movie, Void, Void> {
+    class InsertAsyncTask extends AsyncTask<Movie, Void, Long> {
         MovieDAO mMovieDao;
 
         public InsertAsyncTask(MovieDAO mMovieDao) {
+
             this.mMovieDao = mMovieDao;
         }
 
         @Override
-        protected Void doInBackground(Movie... movies) {
-            mMovieDao.insert(movies[0]);
+        protected Long doInBackground(Movie... movies) {
+            Log.i("INFO","Proses Insert sedang dilakukan....");
+            mMovieDao.insert(movies);
             return null;
         }
     }
@@ -66,10 +73,10 @@ public class MovieViewModel extends AndroidViewModel {
             this.mMovieDao = movieDAO;
         }
 
-        @Override
-        protected Void doInBackground(Movie... movies) {
-            mMovieDao.update(movies[0]);
-            return null;
+            @Override
+            protected Void doInBackground(Movie... movies) {
+                mMovieDao.update(movies[0]);
+                return null;
         }
     }
 

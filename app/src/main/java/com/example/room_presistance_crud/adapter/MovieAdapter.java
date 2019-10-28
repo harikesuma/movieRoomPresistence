@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.room_presistance_crud.FormEditActivity;
 import com.example.room_presistance_crud.MainActivity;
 import com.example.room_presistance_crud.R;
+import com.example.room_presistance_crud.room.Director;
 import com.example.room_presistance_crud.room.Movie;
+import com.example.room_presistance_crud.room.MovieRoomDatabase;
 import com.example.room_presistance_crud.room.MovieViewModel;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     private List<Movie> movieList;
     private MovieViewModel movieViewModel;
     private onDeleteListener onDeleteListener;
+    public MovieRoomDatabase movieRoomDatabase;
 
     public interface onDeleteListener{
         void onDeleteListener(Movie movie);
@@ -49,9 +52,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MovieViewHolder holder, final int position) {
         if(movieList != null){
-            holder.movieName_tv.setText(movieList.get(position).getMovieName());
-            holder.movieGenre_tv.setText(movieList.get(position).getMovieGenre());
-            holder.timeStamp_tv.setText(movieList.get(position).getTimeStamp());
+
+            int id = movieList.get(position).getDirector_id();
+
+            String nama = MovieRoomDatabase.getInstance(context).directorDAO().getDirectorName(id);
+
+            holder.movieName_tv.setText(movieList.get(position).getMovie_name());
+            holder.movieGenre_tv.setText(movieList.get(position).getMovie_genre());
+            holder.timeStamp_tv.setText(movieList.get(position).getTime_stamp());
+            holder.director_tv.setText(nama);
+
             holder.edit_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,6 +107,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         TextView timeStamp_tv;
         ImageView edit_iv;
         ImageView delete_iv;
+        TextView director_tv;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -105,6 +116,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             timeStamp_tv    = itemView.findViewById(R.id.timestamp);
             edit_iv         = itemView.findViewById(R.id.edit);
             delete_iv       = itemView.findViewById(R.id.delete);
+            director_tv     = itemView.findViewById(R.id.directorName);
         }
     }
 }

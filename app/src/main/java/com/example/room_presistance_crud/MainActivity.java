@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.onDe
                 movieAdapter.setMovies(movies);
             }
         });
+
+
     }
 
     @Override
@@ -75,20 +78,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.onDe
 
 
         if(requestCode == NEW_MOVIE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            int directorId = extras.getInt("directorId");
 
-
-
-            Movie movie = new Movie(data.getStringExtra("name"),data.getStringExtra("genre"),getDateTime());
+            Movie movie = new Movie(data.getStringExtra("name"),data.getStringExtra("genre"),directorId,getDateTime());
             movieViewModel.insert(movie);
-            String TAG = "MainActivity";
-            Log.i(TAG, "Insert Data Success");
             Toast.makeText(getApplicationContext(), "Movie Added", Toast.LENGTH_SHORT).show();
         }
         else if(requestCode == EDIT_MOVIE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
             Bundle extras = data.getExtras();
             int sss =  extras.getInt("movie");
+            int directorId = extras.getInt("directorId");
 
-            Movie movie = new Movie(sss, data.getStringExtra("name"),data.getStringExtra("genre"),getDateTime());
+            Movie movie = new Movie(sss, data.getStringExtra("name"),data.getStringExtra("genre"),directorId,getDateTime());
             movieViewModel.update(movie);
             Toast.makeText(getApplicationContext(), "Movie Updated", Toast.LENGTH_SHORT).show();
         }

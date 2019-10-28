@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "69d1d72f8e3cda5881275fd2089b7a88",
+    "identityHash": "b0c4f45e2831bf1396c32a806c7b1248",
     "entities": [
       {
         "tableName": "tb_movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `genre` TEXT, `timestamp` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movie_name` TEXT, `movie_genre` TEXT, `director_id` INTEGER NOT NULL, `time_created` TEXT, FOREIGN KEY(`director_id`) REFERENCES `tb_director`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,20 +15,79 @@
             "notNull": true
           },
           {
-            "fieldPath": "movieName",
-            "columnName": "name",
+            "fieldPath": "movie_name",
+            "columnName": "movie_name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "movieGenre",
-            "columnName": "genre",
+            "fieldPath": "movie_genre",
+            "columnName": "movie_genre",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "timeStamp",
-            "columnName": "timestamp",
+            "fieldPath": "director_id",
+            "columnName": "director_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time_stamp",
+            "columnName": "time_created",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_tb_movie_director_id",
+            "unique": false,
+            "columnNames": [
+              "director_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_tb_movie_director_id` ON `${TABLE_NAME}` (`director_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "tb_director",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "director_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tb_director",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `director_name` TEXT, `gender` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "director_name",
+            "columnName": "director_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -46,7 +105,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '69d1d72f8e3cda5881275fd2089b7a88')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0c4f45e2831bf1396c32a806c7b1248')"
     ]
   }
 }
